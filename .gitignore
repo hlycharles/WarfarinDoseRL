@@ -1,0 +1,8 @@
+# data files
+data
+
+# python byte code
+*.pyc
+
+# macOS system file
+.DS_Store
