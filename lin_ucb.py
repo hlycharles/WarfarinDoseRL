@@ -16,7 +16,7 @@ class LinUCB:
 
         self.alpha = 0.25
 
-        self.result_file = "./data/eval_" + str(int(time.time())) + ".txt"
+        self.result_file = "./save/eval_" + str(int(time.time())) + ".txt"
 
     def train(self):
         print("Parsing features...")
