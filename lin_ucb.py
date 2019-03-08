@@ -75,7 +75,7 @@ class LinUCB:
             self.theta[a_max] = np.matmul(self.AI[a_max], self.b[a_max])
 
             # evaluate every 50 steps
-            should_eval = (i % 10 == 0) and (i > 0)
+            should_eval = (i % 100 == 0) and (i > 0)
             if (should_eval):
                 print("train: {}/{}".format(i, total_sample))
                 self.evaluate()
