@@ -6,3 +6,6 @@ data
 
 # macOS system file
 .DS_Store
+
+# AWS key
+*.pem
