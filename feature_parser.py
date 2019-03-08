@@ -2,6 +2,7 @@ import meta
 from feature_entry import FeatureEntry
 from util import read_all_data
 import data_processor as dp
+import numpy as np
 
 class FeatureParser:
     def __init__(self):
@@ -102,7 +103,10 @@ class FeatureParser:
                     sample[meta.MEDICATIONS]
                 ))
 
-            result.append(features)
+            if (features is None):
+                result.append(None)
+            else:
+                result.append(np.array([features]))
 
         return result
 
