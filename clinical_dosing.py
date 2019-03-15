@@ -4,11 +4,14 @@ Warfarin Clinical Dosing Algorithm.
 
 import data_processor as dp
 import meta
+from util import get_dose_range
 from baseline import Baseline
 
 class ClinicalDosing(Baseline):
-    def __init__(self, data_path):
-        super(ClinicalDosing, self).__init__(data_path)
+    def __init__(self, data_path, log_path):
+        super(ClinicalDosing, self).__init__(
+            "ClinicalDosing", data_path, log_path
+        )
 
     # predict square root of dose for a single sample
     def predict_sample(self, sample):
@@ -46,7 +49,7 @@ class ClinicalDosing(Baseline):
         # amiodarone status
         amiodarone_status = dp.get_amiodarone_status(sample[meta.MEDICATIONS])
 
-        return (
+        sqrt_dose = (
             4.0376
             - 0.2546 * age_decade
             + 0.0118 * height
@@ -57,21 +60,17 @@ class ClinicalDosing(Baseline):
             + 1.2799 * enzyme_inducer_status
             - 0.5695 * amiodarone_status
         )
+        dose = sqrt_dose ** 2
+        return get_dose_range(dose)
 
+    def step(self, sample, feature, t):
+        return self.predict_sample(sample)
 
-    def evaluate(self):
-        sqrt_doses = list(map(
-            lambda s: self.predict_sample(s), self.samples
-        ))
-
-        doses = list(map(
-            lambda d: None if d is None else d ** 2, sqrt_doses
-        ))
-
-        self.compute_metrics(doses)
-
-
+    def predict(self, sample, feature):
+        return self.predict_sample(sample)
 
 if __name__ == "__main__":
-    clinicalDosing = ClinicalDosing("./data/warfarin.csv")
-    clinicalDosing.evaluate()
+    clinicalDosing = ClinicalDosing(
+        "./data/warfarin.csv", "./save/clinical_dosing"
+    )
+    clinicalDosing.train(3)

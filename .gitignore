@@ -9,3 +9,6 @@ data
 
 # AWS key
 *.pem
+
+# outputs
+save

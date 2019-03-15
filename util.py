@@ -1,4 +1,5 @@
 import csv
+import meta
 
 # read samples from data file
 def read_all_data(file_path):
@@ -31,3 +32,18 @@ def doses_in_same_range(d1, d2):
         ) or
         (d1 > thresh_hi and d2 > thresh_hi)
     )
+
+def get_dose_range(dose):
+    if (dose < 21):
+        return meta.DOSE_LO
+    if (21 <= dose and dose <= 49):
+        return meta.DOSE_MD
+    return meta.DOSE_HI
+
+def has_gold_dose(sample):
+    try:
+        gold_dose = float(sample[meta.THERAPEUTIC_DOSE])
+        return True
+    except:
+        return False
+    return False

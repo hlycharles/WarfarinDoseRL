@@ -1,15 +1,18 @@
 from baseline import Baseline
+import meta
 
 class FixedDose(Baseline):
-    def __init__(self, data_path):
-        super(FixedDose, self).__init__(data_path)
+    def __init__(self, data_path, log_path):
+        super(FixedDose, self).__init__("FixedDose", data_path, log_path)
 
         self.weekly_dose = 35
 
-    def evaluate(self):
-        predictions = [self.weekly_dose] * len(self.samples)
-        self.compute_metrics(predictions)
+    def step(self, sample, feature, t):
+        return meta.DOSE_MD
+
+    def predict(self, sample, feature):
+        return meta.DOSE_MD
 
 if __name__ == "__main__":
-    fixed_dose = FixedDose("./data/warfarin.csv")
-    fixed_dose.evaluate()
+    fixed_dose = FixedDose("./data/warfarin.csv", "./save/fixed_dose")
+    fixed_dose.train(3)
