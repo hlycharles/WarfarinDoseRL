@@ -55,7 +55,7 @@ class Baseline:
             with open(regret_path, "w") as rf:
                 for i in range(len(samples) + 1):
 
-                    if ((i > 0 and i % 100 == 0) or (i == len(samples))):
+                    if ((i > 0 and i % 500 == 0) or (i == len(samples))):
                         incorrect_precent = self.evaluate()
                         with open(eval_path, "a") as ef:
                             ef.write("{}:{}\n".format(
