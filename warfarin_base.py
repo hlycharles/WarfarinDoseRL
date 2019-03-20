@@ -1,5 +1,5 @@
 """
-Parent class for baseline implementations.
+Parent class for warfarine dose algorithm implementations.
 """
 
 from util import read_all_data, doses_in_same_range, has_gold_dose
@@ -9,7 +9,7 @@ import time
 import random
 import os
 
-class Baseline:
+class WarfarineBase:
     def __init__(self, name, data_path, log_path):
         self.name = name
 
@@ -55,11 +55,14 @@ class Baseline:
             with open(regret_path, "w") as rf:
                 for i in range(len(samples) + 1):
 
-                    if ((i > 0 and i % 500 == 0) or (i == len(samples))):
+                    if (
+                        (total_sample > 0 and total_sample % 500 == 0) or
+                        (i == len(samples))
+                    ):
                         incorrect_precent = self.evaluate()
                         with open(eval_path, "a") as ef:
                             ef.write("{}:{}\n".format(
-                                i, incorrect_precent
+                                total_sample, incorrect_precent
                             ))
                     if (i == len(samples)):
                         print(" " * 20, end="\r")
@@ -80,7 +83,7 @@ class Baseline:
                     total_sample += 1
 
                     rf.write("{}:{}\n".format(
-                        i + 1, total_sample - correct_sample
+                        total_sample, total_sample - correct_sample
                     ))
 
                 rf.write("-END-\n")

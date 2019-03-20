@@ -1,10 +1,9 @@
-from util import read_all_data
-from baseline import Baseline
-import meta
 import numpy as np
-import time
 
-class LinUCB(Baseline):
+from warfarin_base import WarfarineBase
+import meta
+
+class LinUCB(WarfarineBase):
     def __init__(self, data_path, log_path):
         super(LinUCB, self).__init__("LinUCB", data_path, log_path)
 

@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 
 class StatsCollector:
     def __init__(self, run_count, sample_count):
@@ -45,7 +46,7 @@ class StatsCollector:
                     f.write("\n")
 
 
-    def collect(self, data_path, log_path):
+    def collect(self, data_path, log_path, log_empty=True):
         regrets = []
         incorrect = []
         for i in range(self.run_count):
@@ -58,16 +59,17 @@ class StatsCollector:
 
         # generate stats
         regret_log_path = "{}_regret.csv".format(log_path)
-        self.calculate_stats(regrets, regret_log_path)
+        self.calculate_stats(regrets, regret_log_path, log_empty=log_empty)
         eval_log_path = "{}_eval.csv".format(log_path)
         self.calculate_stats(incorrect, eval_log_path, log_empty=False)
 
 
 if __name__ == "__main__":
     collector = StatsCollector(8, 5528)
-    collector.collect("./save/fixed_dose/1552640784", "./save/fixed_dose")
-    collector.collect(
-        "./save/clinical_dosing/1552640790", "./save/clinical_dosing"
-    )
-    collector.collect("./save/lin_ucb/1552640801", "./save/lin_ucb")
-    collector.collect("./save/lasso_bandit/1552640770", "./save/lasso_bandit")
+    if (len(sys.argv) >= 3):
+        data_path = sys.argv[1]
+        log_path = sys.argv[2]
+        log_empty = True
+        if (len(sys.argv) > 3):
+            log_empty = int(sys.argv[3]) > 0
+        collector.collect(data_path, log_path, log_empty=log_empty)

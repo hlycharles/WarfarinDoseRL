@@ -1,14 +1,12 @@
-from util import read_all_data
-from feature_parser import FeatureParser
-import meta
 import numpy as np
 from sklearn import linear_model
-import time
 import math
 import random
-from baseline import Baseline
 
-class LassoBandit(Baseline):
+import meta
+from warfarin_base import WarfarineBase
+
+class LassoBandit(WarfarineBase):
     def __init__(self, data_path, log_path):
         super(LassoBandit, self).__init__("LassoBandit", data_path, log_path)
 

@@ -1,7 +1,7 @@
-from baseline import Baseline
+from warfarin_base import WarfarineBase
 import meta
 
-class FixedDose(Baseline):
+class FixedDose(WarfarineBase):
     def __init__(self, data_path, log_path):
         super(FixedDose, self).__init__("FixedDose", data_path, log_path)
 

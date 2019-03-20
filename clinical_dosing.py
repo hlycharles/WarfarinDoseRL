@@ -5,9 +5,9 @@ Warfarin Clinical Dosing Algorithm.
 import data_processor as dp
 import meta
 from util import get_dose_range
-from baseline import Baseline
+from warfarin_base import WarfarineBase
 
-class ClinicalDosing(Baseline):
+class ClinicalDosing(WarfarineBase):
     def __init__(self, data_path, log_path):
         super(ClinicalDosing, self).__init__(
             "ClinicalDosing", data_path, log_path
